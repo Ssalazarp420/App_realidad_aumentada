@@ -16,6 +16,33 @@ La entrada más reciente va arriba.
 
 ---
 
+## 2026-10-18 — Fase 1: proyecto base con sesión AR
+
+**Fase:** 1 · **Rama:** `feature/fase-1-proyecto-base`
+
+### Hecho
+- Creé el proyecto con la plantilla `default@sdk-57` de Expo (generado en una carpeta temporal y copiado, porque el repo no estaba vacío). Quité las pantallas de ejemplo, el script `reset-project` y los paquetes sin uso (`@expo/ui`, `expo-glass-effect`, `expo-symbols`, `expo-web-browser`, `expo-device`).
+- Instalé `expo-dev-client` y `@reactvision/react-viro` 3.0.3 (versión exacta), con el plugin configurado en `app.json` (`xRMode: ["AR"]`).
+- Pantallas: `src/app/index.tsx` (inicio con el botón "Iniciar AR") y `src/app/ar.tsx` (`ViroARSceneNavigator` + botón volver). Escena `src/ar/HelloCubeScene.tsx`: un cubo de 20 cm a 1 m de la cámara y un texto con el estado del tracking.
+- Configuré ESLint (`eslint-config-expo`) y `.nvmrc` (Node 24). Conservé `AGENTS.md` y `.claude/settings.json` de la plantilla.
+- `tsc`, `expo lint` y `expo-doctor` (21/21) pasan.
+- Primer build Android local con `npx expo run:android`: OK. **Probado en el Redmi Note 11: se ve el cubo y "¡AR funcionando!"** ✅
+
+### Decisiones
+- D7: Expo SDK 57 en lugar de 58, porque Viro 3.0.3 solo soporta Expo 57 / RN 0.86.
+- D8: librerías y CLIs por proyecto (`node_modules`, `npx`); solo Node, JDK y Android SDK van en el sistema. Ver ARQUITECTURA §6.3.
+- ARCore queda `optional` (así lo deja Viro). La decisión de `required` se pasa a la Fase 9.
+
+### Problemas y soluciones
+- El primer build se cortó a mitad de la compilación C++ porque se cerró la sesión; al relanzarlo retomó desde ahí y terminó en 4 min 33 s.
+- MIUI rechazó `adb install` (`INSTALL_FAILED_USER_RESTRICTED`) aun con "Instalar vía USB" activado. Solución: `adb push` del APK a Descargas e instalación manual desde el teléfono (ver ARQUITECTURA §6.2.1).
+- Metro corre en WSL: `adb reverse tcp:8081 tcp:8081` + `expo start --dev-client --localhost` hacen que el teléfono lo encuentre por adb, sin pasar por la red de WSL.
+
+### Pendiente
+- Fase 2: interfaz (toolbar, inventario horizontal, animaciones con Reanimated, estados con Zustand).
+
+---
+
 ## 2026-10-18 — Arranque del proyecto y Fase 0 (entorno)
 
 **Fase:** 0 · **Rama:** `feature/fase-0-entorno`
@@ -40,5 +67,5 @@ La entrada más reciente va arriba.
 
 ### Pendiente
 - ~~Instalar las extensiones de VS Code recomendadas.~~ Hecho en la misma sesión.
-- Fusionar `feature/fase-0-entorno` en `develop` por PR.
-- Iniciar la Fase 1: crear el proyecto Expo, instalar Viro y mostrar un cubo en AR.
+- ~~Fusionar `feature/fase-0-entorno` en `develop` por PR.~~ Hecho (PR #1).
+- ~~Iniciar la Fase 1.~~ Hecho (ver la entrada siguiente).

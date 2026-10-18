@@ -14,6 +14,6 @@ Construida con React Native + Expo + ViroReact (ARCore), con el catálogo en Sup
 
 ## Estado
 
-🚧 En desarrollo — Fase 0 (entorno).
+🚧 En desarrollo — Fase 1 completa (sesión AR funcionando). Siguiente: Fase 2 (interfaz).
 
 Inspirado en el [Curso de Realidad Aumentada con Unity](https://github.com/XRAdventure/Curso-de-Realidad-Aumentada-con-Unity) de XRAdventure.

@@ -32,3 +32,15 @@ yarn-error.*
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# Nativo / firma (complemento de la plantilla Expo)
+.kotlin/
+*.orig.*
+*.p8
+*.p12
+*.key
+*.pem
+
+# Metro / TypeScript
+.metro-health-check*
+*.tsbuildinfo
