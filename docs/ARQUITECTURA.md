@@ -60,7 +60,7 @@ flowchart LR
 | AR | `@reactvision/react-viro` **3.0.3** (versión exacta) → ARCore | AR Foundation + ARCore XR Plugin | ✅ |
 | Navegación | `expo-router` ~57.0.28 (rutas en `src/app/`) | Escenas | ✅ |
 | Lint | ESLint + `eslint-config-expo` (`npx expo lint`) | — | ✅ |
-| Estado global | `zustand` | `GameManager` (singleton) | 🕓 |
+| Estado global | `zustand` 5.0.15 (`src/state/useAppStore.ts`) | `GameManager` (singleton) | ✅ |
 | Animaciones UI | `react-native-reanimated` 4.5.1 (viene con la plantilla) | DOTween | ✅ |
 | Gestos UI 2D | `react-native-gesture-handler` ~2.32.0 (viene con la plantilla) | — | ✅ |
 | Imágenes | `expo-image` ~57.0.5 | RawImage | ✅ |
@@ -156,6 +156,8 @@ Meshy / Tripo AI ──► Blender (limpieza, escala real en metros, pivote en l
 
 **Datos del build (Fase 1):** `compileSdk` 36, `targetSdk` 36, `minSdk` 24, NDK 27.1.12297006, CMake 3.22.1, Gradle 9.3.1. Solo compila `arm64-v8a` (la ABI del dispositivo conectado). El primer build tarda ~15 min; los siguientes ~5 min. El APK debug pesa ~106 MB.
 
+**Después de `npx expo install` reiniciar Metro con `--clear`.** Si Metro está corriendo mientras cambia `node_modules`, envía al teléfono una actualización (HMR) que vuelve a registrar los componentes nativos, y aparecen errores `Tried to register two views with the same name VRT…/RNS…`. El primer bundle después de `--clear` tarda ~90 s; los siguientes, unos pocos segundos. La pantalla en blanco al abrir la app es esa descarga del bundle desde Metro y solo pasa en desarrollo.
+
 **MIUI bloquea `adb install`** (`INSTALL_FAILED_USER_RESTRICTED`), aun con "Instalar vía USB" activado, por el aviso de confirmación. Solución:
 ```bash
 adb push android/app/build/outputs/apk/debug/app-debug.apk /sdcard/Download/ar-furniture-dev.apk
@@ -204,10 +206,11 @@ App_realidad_aumentada/
 │   ├── ar/                 # Escenas y objetos 3D
 │   │   ├── HelloCubeScene.tsx  # Escena de prueba de la Fase 1    ✅
 │   │   └── FurnitureScene, PlacedObject, Reticle               🕓
-│   ├── ui/                 # InventoryPanel, ItemButton, Toolbar 🕓
-│   ├── state/useAppStore.ts                                     🕓
-│   ├── data/               # catalog.local.ts, catalog.remote.ts 🕓
-│   └── types.ts                                                 🕓
+│   ├── ui/                 # Toolbar, InventoryPanel, ItemButton, PlacingBanner ✅
+│   ├── state/useAppStore.ts  # Modo de la app + item elegido   ✅
+│   ├── data/catalog.local.ts # Catálogo provisional            ✅
+│   ├── data/catalog.remote.ts # Supabase (Fase 8)              🕓
+│   └── types.ts            # CatalogItem, AppMode              ✅
 ├── assets/images/          # Ícono y splash                       ✅
 ├── assets/models/          # .glb locales                        🕓
 ├── assets/thumbnails/                                           🕓
