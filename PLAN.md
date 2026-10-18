@@ -87,6 +87,21 @@ Desarrollo en VS Code con Claude Code, sobre WSL2.
 
 **Formato de modelos 3D:** `.glb` (glTF binario). Optimizar con `@gltf-transform/cli` (`gltf-transform optimize in.glb out.glb`), con una meta de menos de 5 MB por modelo.
 
+### 2.4 Flujo de modelos (Meshy / Tripo AI / Blender → AR + impresión 3D)
+
+Un mismo objeto se publica en dos versiones:
+
+```
+Meshy / Tripo AI ──► Blender (limpieza, escala real en metros, pivote en la base)
+                        ├──► .stl / .3mf  alta resolución, sólido y "watertight" ─► impresión 3D
+                        └──► .glb  decimado (≤ ~50k triángulos, texturas ≤ 1024 px)
+                                 └─► gltf-transform optimize ─► AR (< 5 MB)
+```
+
+- Ambos archivos se suben a Supabase Storage. La fila de `furniture` guarda `model_url` (AR) y `print_url` (impresión).
+- Límites del plan gratuito de Supabase: 1 GB de Storage y **50 MB por archivo**. Los `.stl` de alta resolución pueden pasar ese límite: en ese caso conviene comprimirlos (`.3mf` o `.zip`).
+- A futuro: Meshy y Tripo tienen API, así que una *Edge Function* de Supabase podría generar el modelo y registrarlo en el catálogo automáticamente.
+
 ---
 
 ## 3. Estructura propuesta del proyecto
@@ -146,12 +161,13 @@ Cada fase termina con algo que se puede probar en el teléfono. Marca las casill
 ### Fase 0 — Entorno listo *(cap. 0)*
 Dispositivo de pruebas: **Xiaomi Redmi Note 11** (en la lista de ARCore certificados).
 - [x] Instalar Node LTS (nvm).
-- [ ] Instalar JDK 17 y el Android SDK en WSL; configurar `ANDROID_HOME` y `PATH`.
+- [x] Instalar JDK 17 y el Android SDK en WSL (`~/Android/Sdk`: platform-tools, platform 36, build-tools 36); `ANDROID_HOME` y `PATH` en `~/.bashrc`.
 - [ ] Instalar las extensiones de VS Code (sección 2.2; ya recomendadas en `.vscode/extensions.json`).
-- [ ] Activar Opciones de desarrollador + depuración inalámbrica en el teléfono; `adb devices` lo lista.
-- [ ] Confirmar que el teléfono tiene "Google Play Services para AR" instalado.
-- [x] `git init` con Gitflow (`main`, `develop`).
-- [ ] Repositorio en GitHub, push y protección de ramas.
+- [x] Activar Opciones de desarrollador + depuración USB e inalámbrica en el teléfono.
+- [ ] `adb pair` + `adb connect`; `adb devices` lista el teléfono.
+- [x] Confirmar que el teléfono tiene "Servicios de Google Play para RA" instalado.
+- [x] `git init` con Gitflow (`main`, `develop`, tags `vX.Y.Z`).
+- [x] Repositorio público en GitHub, push y protección de ramas (`develop` por defecto).
 
 ### Fase 1 — Proyecto base con sesión AR *(cap. 1)*
 - [ ] `npx create-expo-app@latest . --template` (TypeScript).
@@ -200,8 +216,8 @@ Dispositivo de pruebas: **Xiaomi Redmi Note 11** (en la lista de ARCore certific
 - [ ] Pedir los permisos de galería de forma correcta (Android 13+ usa permisos granulares).
 
 ### Fase 8 — Contenido en tiempo real *(cap. 8)*
-- [ ] Elegir backend: **Supabase** (Postgres + Storage + Realtime, plan gratuito) o **Firebase** (Firestore + Storage).
-- [ ] Tabla/colección `furniture` con los campos de `CatalogItem`; los `.glb` y las miniaturas van en Storage.
+- [x] Backend elegido: **Supabase** (Postgres + Storage + Realtime, plan gratuito).
+- [ ] Tabla `furniture` con los campos de `CatalogItem` (+ `print_url` opcional); bucket `models` para `.glb`/`.stl` y bucket `thumbnails`.
 - [ ] Suscribirse a los cambios y actualizar el inventario sin reiniciar la app.
 - [ ] Descargar modelos a caché (`expo-file-system`) antes de colocarlos; mostrar progreso.
 - [ ] *Fallback* al catálogo local si no hay conexión.
