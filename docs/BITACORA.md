@@ -16,6 +16,29 @@ La entrada más reciente va arriba.
 
 ---
 
+## 2026-10-18 — Fase 2: interfaz
+
+**Fase:** 2 · **Rama:** `feature/fase-2-interfaz`
+
+### Hecho
+- Store de Zustand (`useAppStore`) con los modos `menu` / `inventory` / `placing` / `editing` y el item elegido.
+- `Toolbar` inferior (Foto, Inventario, Eliminar), `InventoryPanel` con scroll horizontal animado con Reanimated (deslizamiento + fondo oscurecido), `ItemButton` y `PlacingBanner`.
+- Tipos `CatalogItem` / `AppMode` y catálogo local con 6 muebles provisionales.
+- Moví los comandos de reconexión del README a una sección "Desarrollo diario".
+- `tsc` y `expo lint` pasan. **Probado en el Redmi: la interfaz funciona.** ✅
+
+### Problemas y soluciones
+- Errores `Tried to register two views with the same name …` después de instalar Zustand con Metro corriendo. Causa: la actualización HMR de `node_modules`. Solución: reiniciar Metro con `--clear` (ver ARQUITECTURA §6.2.1).
+- `pkill -f "expo start"` dentro del mismo comando que lanzaba Metro lo terminó a sí mismo. Detener Metro por separado.
+
+### Observaciones de la prueba
+- El cubo de prueba "se mueve" por la pantalla: está a una posición fija respecto al origen de la sesión, no anclado al piso, y el tracking aún no se estabiliza. Se resuelve con la detección de planos (Fase 3) y la colocación por *hit test* (Fase 5). El usuario propuso además ubicar los objetos con un marcador (imagen/QR); ver la entrada siguiente.
+
+### Pendiente
+- Fase 3 (planos) y la colocación con marcador.
+
+---
+
 ## 2026-10-18 — Fase 1: proyecto base con sesión AR
 
 **Fase:** 1 · **Rama:** `feature/fase-1-proyecto-base`

@@ -42,10 +42,14 @@ Dispositivo de pruebas: **Xiaomi Redmi Note 11** (`2201117TL`, Android 13, ARCor
 **Listo cuando:** abres la app en el teléfono y ves un cubo en el espacio a través de la cámara. ✅ *2026-10-18*
 
 ### Fase 2 — Interfaz *(cap. 2)*
-- [ ] Toolbar inferior con botones: abrir inventario, tomar foto, eliminar objeto.
-- [ ] `InventoryPanel` con `FlatList` horizontal (scroll solo horizontal, como en el curso).
-- [ ] Animación de entrada y salida con Reanimated (reemplaza DOTween).
-- [ ] Estados de la app en Zustand: `menu` → `inventory` → `placing` → `editing` (equivale a los eventos del `GameManager`).
+- [x] Toolbar inferior con botones: abrir inventario, tomar foto, eliminar objeto (`src/ui/Toolbar.tsx`; foto y eliminar quedan deshabilitados hasta las fases 7 y 6).
+- [x] `InventoryPanel` con `FlatList` horizontal (scroll solo horizontal, como en el curso).
+- [x] Animación de entrada y salida con Reanimated (reemplaza DOTween).
+- [x] Estados de la app en Zustand: `menu` → `inventory` → `placing` → `editing` (equivale a los eventos del `GameManager`).
+- [x] Aviso de modo `placing` con el item elegido y botón Cancelar (`src/ui/PlacingBanner.tsx`).
+- [x] Catálogo local provisional con 6 muebles (miniaturas con emoji hasta la Fase 4).
+
+**Listo cuando:** se abre y cierra el inventario animado y al elegir un mueble aparece el aviso de colocación. ✅ *2026-10-18*
 
 ### Fase 3 — Detección de planos y nube de puntos *(cap. 3)*
 - [ ] Activar la detección de planos horizontales en `ViroARScene` (`anchorDetectionTypes`).
