@@ -120,16 +120,38 @@ App_realidad_aumentada/
 
 ---
 
+## 3.1 Versionamiento (Gitflow)
+
+Repositorio: `github.com/Ssalazarp420/App_realidad_aumentada`
+
+| Rama | Uso |
+|---|---|
+| `main` | Solo versiones publicadas. Cada merge lleva un tag `vX.Y.Z` |
+| `develop` | Integración; siempre debe compilar |
+| `feature/<nombre>` | Una por fase o funcionalidad (ej. `feature/fase-3-planos`). Sale de `develop` y vuelve a `develop` |
+| `release/<X.Y.Z>` | Preparar una versión para Play Store (subir `version`/`versionCode`, ajustes finales). Sale de `develop` y se fusiona en `main` + `develop` |
+| `hotfix/<X.Y.Z>` | Arreglo urgente sobre producción. Sale de `main` y se fusiona en `main` + `develop` |
+
+- Mensajes de commit con [Conventional Commits](https://www.conventionalcommits.org/es/): `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`.
+- Versionado [SemVer](https://semver.org/lang/es/): `0.x.y` mientras no esté en producción y `1.0.0` en el primer lanzamiento público.
+- El `versionCode` de Android sube en cada build que se envía a Play.
+- Proteger `main` y `develop` en GitHub (no permitir push directo; merge por Pull Request).
+
+---
+
 ## 4. Fases (cada una equivale a un capítulo del curso)
 
 Cada fase termina con algo que se puede probar en el teléfono. Marca las casillas al avanzar.
 
 ### Fase 0 — Entorno listo *(cap. 0)*
-- [ ] Instalar Node LTS, JDK 17 y el Android SDK en WSL; configurar `ANDROID_HOME` y `PATH`.
-- [ ] Instalar las extensiones de VS Code (sección 2.2).
+Dispositivo de pruebas: **Xiaomi Redmi Note 11** (en la lista de ARCore certificados).
+- [x] Instalar Node LTS (nvm).
+- [ ] Instalar JDK 17 y el Android SDK en WSL; configurar `ANDROID_HOME` y `PATH`.
+- [ ] Instalar las extensiones de VS Code (sección 2.2; ya recomendadas en `.vscode/extensions.json`).
 - [ ] Activar Opciones de desarrollador + depuración inalámbrica en el teléfono; `adb devices` lo lista.
 - [ ] Confirmar que el teléfono tiene "Google Play Services para AR" instalado.
-- [ ] `git init` + repositorio en GitHub.
+- [x] `git init` con Gitflow (`main`, `develop`).
+- [ ] Repositorio en GitHub, push y protección de ramas.
 
 ### Fase 1 — Proyecto base con sesión AR *(cap. 1)*
 - [ ] `npx create-expo-app@latest . --template` (TypeScript).

@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "ms-vscode-remote.remote-wsl",
+    "anthropic.claude-code",
+    "expo.vscode-expo-tools",
+    "msjsdiag.vscode-react-native",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "cesium.gltf-vscode",
+    "usernamehw.errorlens"
+  ]
+}
