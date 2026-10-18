@@ -22,7 +22,7 @@ Cada fase se trabaja en una rama `feature/fase-N-<nombre>` y termina con algo qu
 Dispositivo de pruebas: **Xiaomi Redmi Note 11** (`2201117TL`, Android 13, ARCore certificado).
 - [x] Instalar Node LTS (nvm).
 - [x] Instalar JDK 17 y el Android SDK en WSL; `ANDROID_HOME` y `PATH` en `~/.bashrc`.
-- [ ] Instalar las extensiones de VS Code (recomendadas en `.vscode/extensions.json`).
+- [x] Instalar las extensiones de VS Code (recomendadas en `.vscode/extensions.json`).
 - [x] Activar Opciones de desarrollador + depuración USB e inalámbrica en el teléfono.
 - [x] `adb pair` + `adb connect`; `adb devices` lista el teléfono.
 - [x] Confirmar que el teléfono tiene "Servicios de Google Play para RA" instalado.

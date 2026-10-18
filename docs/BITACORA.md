@@ -39,6 +39,6 @@ La entrada más reciente va arriba.
 - Ubuntu no tenía `unzip`, necesario para el Android SDK; se instaló con apt.
 
 ### Pendiente
-- Instalar las extensiones de VS Code recomendadas.
+- ~~Instalar las extensiones de VS Code recomendadas.~~ Hecho en la misma sesión.
 - Fusionar `feature/fase-0-entorno` en `develop` por PR.
 - Iniciar la Fase 1: crear el proyecto Expo, instalar Viro y mostrar un cubo en AR.
