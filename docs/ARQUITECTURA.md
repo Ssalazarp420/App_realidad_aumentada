@@ -146,6 +146,22 @@ Meshy / Tripo AI ──► Blender (limpieza, escala real en metros, pivote en l
 
 > El puerto de `adb connect` cambia cada vez que se reactiva la depuración inalámbrica. Si `adb devices` aparece vacío, vuelve a conectar con el puerto que muestra el teléfono.
 
+### 6.2.1 Ciclo de desarrollo en el teléfono
+
+| Paso | Comando | Cuándo |
+|---|---|---|
+| Compilar e instalar el *development build* | `npx expo run:android` | Al inicio, y cada vez que cambie código **nativo**: nueva librería nativa, cambios en `app.json` o en *config plugins* |
+| Redirigir Metro al teléfono | `adb reverse tcp:8081 tcp:8081` | Cada vez que se reconecta adb |
+| Servidor de desarrollo | `npx expo start --dev-client --localhost` | Cada sesión. Los cambios en JS/TS se ven al instante, sin recompilar |
+
+**Datos del build (Fase 1):** `compileSdk` 36, `targetSdk` 36, `minSdk` 24, NDK 27.1.12297006, CMake 3.22.1, Gradle 9.3.1. Solo compila `arm64-v8a` (la ABI del dispositivo conectado). El primer build tarda ~15 min; los siguientes ~5 min. El APK debug pesa ~106 MB.
+
+**MIUI bloquea `adb install`** (`INSTALL_FAILED_USER_RESTRICTED`), aun con "Instalar vía USB" activado, por el aviso de confirmación. Solución:
+```bash
+adb push android/app/build/outputs/apk/debug/app-debug.apk /sdcard/Download/ar-furniture-dev.apk
+```
+Después se instala desde *Archivos → Descargas* en el teléfono.
+
 ### 6.3 ¿Global o por proyecto?
 
 En JavaScript, cada proyecto ya trae su propio "entorno virtual": la carpeta `node_modules/`. Es el equivalente a un `venv` de Python, pero se crea solo con `npm install`.

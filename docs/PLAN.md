@@ -31,14 +31,15 @@ Dispositivo de pruebas: **Xiaomi Redmi Note 11** (`2201117TL`, Android 13, ARCor
 - [x] Documentación: `docs/PLAN.md`, `docs/ARQUITECTURA.md`, `docs/BITACORA.md`, `README.md`.
 
 ### Fase 1 — Proyecto base con sesión AR *(cap. 1)*
-- [ ] `npx create-expo-app@latest` con TypeScript.
-- [ ] Instalar `expo-dev-client` y `@reactvision/react-viro`; agregar su *config plugin* en `app.json`.
-- [ ] Configurar Android en `app.json`: `package` (ej. `com.ssalazarp420.arfurniture`), permiso `CAMERA`, `minSdkVersion` ≥ 24, ARCore **required**.
-- [ ] `npx expo prebuild` + `npx expo run:android`, o bien `eas build --profile development`.
-- [ ] Pantalla AR mínima: `ViroARSceneNavigator` + `ViroARScene` con un cubo flotante.
-- [ ] Anotar las versiones exactas en ARQUITECTURA §3.
+- [x] `npx create-expo-app@latest --template default@sdk-57` (TypeScript, Expo Router).
+- [x] Instalar `expo-dev-client` y `@reactvision/react-viro`; agregar su *config plugin* en `app.json`.
+- [x] Configurar Android en `app.json`: `package` `com.ssalazarp420.arfurniture`, permiso `CAMERA` (lo agrega Viro), `minSdk` 24 / `targetSdk` 36.
+- [ ] ~~ARCore **required**~~ → se pasa a la Fase 9 (Viro lo deja en `optional`).
+- [x] `npx expo run:android` (prebuild + Gradle) e instalación en el Redmi.
+- [x] Pantalla AR mínima: `ViroARSceneNavigator` + `ViroARScene` con un cubo flotante (`src/ar/HelloCubeScene.tsx`).
+- [x] Anotar las versiones exactas en ARQUITECTURA §3.
 
-**Listo cuando:** abres la app en el teléfono y ves un cubo en el espacio a través de la cámara.
+**Listo cuando:** abres la app en el teléfono y ves un cubo en el espacio a través de la cámara. ✅ *2026-10-18*
 
 ### Fase 2 — Interfaz *(cap. 2)*
 - [ ] Toolbar inferior con botones: abrir inventario, tomar foto, eliminar objeto.
@@ -87,6 +88,7 @@ Dispositivo de pruebas: **Xiaomi Redmi Note 11** (`2201117TL`, Android 13, ARCor
 
 ### Fase 9 — Calidad y publicación en Play Store
 - [ ] Ícono, *splash screen* y nombre final.
+- [ ] Decidir ARCore `required` vs `optional`. Con `required`, hace falta un *config plugin* propio que cambie el `meta-data` `com.google.ar.core` y agregue `uses-feature android.hardware.camera.ar`, ejecutado después del plugin de Viro.
 - [ ] Probar en al menos 2 dispositivos y con poca luz; revisar el consumo de memoria con varios modelos.
 - [ ] Tests de la lógica del store y del catálogo (`jest`).
 - [ ] Crear la cuenta de **Google Play Console** (pago único de USD 25).
